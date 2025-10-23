@@ -1,0 +1,4 @@
+{
+  "js/chat.js": ["public/js/whatsapp_integration.bundle.js"],
+  "css/chat.css": ["public/scss/whatsapp_integration.scss"]
+}

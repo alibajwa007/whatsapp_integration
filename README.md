@@ -1,33 +1,9 @@
-### Whatsapp Integration
+## Whatsapp Chat
 
-Whatsapp Integration
+Chat like app for whatsapp to send and recieve messages via whatsapp cloud api.
 
-### Installation
+![whatsapp chat](https://github.com/alibajwa007/whatsapp_integration)
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+#### Note: You can only send direct whatsapp message when you 1st recieve a message from the client(This is the policy set from meta)
+#### Note: This app requires frappe_whatsapp
 
-```bash
-cd $PATH_TO_YOUR_BENCH
-bench get-app $URL_OF_THIS_REPO --branch develop
-bench install-app whatsapp_integration
-```
-
-### Contributing
-
-This app uses `pre-commit` for code formatting and linting. Please [install pre-commit](https://pre-commit.com/#installation) and enable it for this repository:
-
-```bash
-cd apps/whatsapp_integration
-pre-commit install
-```
-
-Pre-commit is configured to use the following tools for checking and formatting your code:
-
-- ruff
-- eslint
-- prettier
-- pyupgrade
-
-### License
-
-mit

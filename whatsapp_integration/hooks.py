@@ -1,32 +1,26 @@
 app_name = "whatsapp_integration"
-app_title = "Whatsapp Integration"
-app_publisher = "alibajwa007"
-app_description = "Whatsapp Integration"
-app_email = "babargoraya878@gmail.com"
-app_license = "mit"
-
-# Apps
-# ------------------
-
+app_title = "Whatsapp Chat"
+app_publisher = "shridhar patil"
+app_description = "Chat app for whatsapp"
+app_email = "shridharpatil2792@gmail.com"
+app_license = "unlicense"
 # required_apps = []
-
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "whatsapp_integration",
-# 		"logo": "/assets/whatsapp_integration/logo.png",
-# 		"title": "Whatsapp Integration",
-# 		"route": "/whatsapp_integration",
-# 		"has_permission": "whatsapp_integration.api.permission.has_app_permission"
-# 	}
-# ]
 
 # Includes in <head>
 # ------------------
+from frappe import __version__ as frappe_version
+
+is_frappe_above_v13 = int(frappe_version.split('.')[0]) > 13
+
+app_include_css = ['whatsapp_integration.bundle.css'] if is_frappe_above_v13 else [
+    '/assets/css/whatsapp_integration.css']
+
+app_include_js = ['whatsapp_integration.bundle.js'] if is_frappe_above_v13 else [
+    '/assets/js/whatsapp_integration.js']
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/whatsapp_integration/css/whatsapp_integration.css"
-# app_include_js = "/assets/whatsapp_integration/js/whatsapp_integration.js"
+# app_include_js = "/assets/whatsapp_integration/js/whatsapp_integration.bundle.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/whatsapp_integration/css/whatsapp_integration.css"
@@ -61,7 +55,7 @@ app_license = "mit"
 
 # website user home page (by Role)
 # role_home_page = {
-# 	"Role": "home_page"
+#	"Role": "home_page"
 # }
 
 # Generators
@@ -75,8 +69,8 @@ app_license = "mit"
 
 # add methods and filters to jinja environment
 # jinja = {
-# 	"methods": "whatsapp_integration.utils.jinja_methods",
-# 	"filters": "whatsapp_integration.utils.jinja_filters"
+#	"methods": "whatsapp_integration.utils.jinja_methods",
+#	"filters": "whatsapp_integration.utils.jinja_filters"
 # }
 
 # Installation
@@ -118,11 +112,11 @@ app_license = "mit"
 # Permissions evaluated in scripted ways
 
 # permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+#	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
 # }
 #
 # has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
+#	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 
 # DocType Class
@@ -130,7 +124,7 @@ app_license = "mit"
 # Override standard doctype classes
 
 # override_doctype_class = {
-# 	"ToDo": "custom_app.overrides.CustomToDo"
+#	"ToDo": "custom_app.overrides.CustomToDo"
 # }
 
 # Document Events
@@ -138,32 +132,38 @@ app_license = "mit"
 # Hook on document methods and events
 
 # doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
+#	"*": {
+#		"on_update": "method",
+#		"on_cancel": "method",
+#		"on_trash": "method"
+#	}
 # }
+
+doc_events = {
+    "WhatsApp Message": {
+        "after_insert":"whatsapp_integration.api.message.last_message"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
 
 # scheduler_events = {
-# 	"all": [
-# 		"whatsapp_integration.tasks.all"
-# 	],
-# 	"daily": [
-# 		"whatsapp_integration.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"whatsapp_integration.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"whatsapp_integration.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"whatsapp_integration.tasks.monthly"
-# 	],
+#	"all": [
+#		"whatsapp_integration.tasks.all"
+#	],
+#	"daily": [
+#		"whatsapp_integration.tasks.daily"
+#	],
+#	"hourly": [
+#		"whatsapp_integration.tasks.hourly"
+#	],
+#	"weekly": [
+#		"whatsapp_integration.tasks.weekly"
+#	],
+#	"monthly": [
+#		"whatsapp_integration.tasks.monthly"
+#	],
 # }
 
 # Testing
@@ -175,14 +175,14 @@ app_license = "mit"
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "whatsapp_integration.event.get_events"
+#	"frappe.desk.doctype.event.event.get_events": "whatsapp_integration.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "whatsapp_integration.task.get_dashboard_data"
+#	"Task": "whatsapp_integration.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -208,37 +208,35 @@ app_license = "mit"
 # --------------------
 
 # user_data_fields = [
-# 	{
-# 		"doctype": "{doctype_1}",
-# 		"filter_by": "{filter_by}",
-# 		"redact_fields": ["{field_1}", "{field_2}"],
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_2}",
-# 		"filter_by": "{filter_by}",
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_3}",
-# 		"strict": False,
-# 	},
-# 	{
-# 		"doctype": "{doctype_4}"
-# 	}
+#	{
+#		"doctype": "{doctype_1}",
+#		"filter_by": "{filter_by}",
+#		"redact_fields": ["{field_1}", "{field_2}"],
+#		"partial": 1,
+#	},
+#	{
+#		"doctype": "{doctype_2}",
+#		"filter_by": "{filter_by}",
+#		"partial": 1,
+#	},
+#	{
+#		"doctype": "{doctype_3}",
+#		"strict": False,
+#	},
+#	{
+#		"doctype": "{doctype_4}"
+#	}
 # ]
 
 # Authentication and authorization
 # --------------------------------
 
 # auth_hooks = [
-# 	"whatsapp_integration.auth.validate"
+#	"whatsapp_integration.auth.validate"
 # ]
 
-# Automatically update python controller files with type annotations for this app.
-# export_python_type_annotations = True
-
-# default_log_clearing_doctypes = {
-# 	"Logging DocType Name": 30  # days to retain logs
-# }
-
+sounds = [
+    {'name': 'chat-notification', 'src': '/assets/frappe/sounds/email.mp3', 'volume': 0.2},
+    {'name': 'chat-message-send', 'src': '/assets/frappe/sounds/submit.mp3', 'volume': 0.2},
+    {'name': 'chat-message-receive', 'src': '/assets/frappe/sounds/alert.mp3', 'volume': 0.5}
+]
